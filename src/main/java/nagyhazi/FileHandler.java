@@ -1,4 +1,4 @@
-package org.example;
+package nagyhazi;
 
 public class FileHandler {
     // { "encryptionType": "Caesar", "input": "hello", "output": "khoor" }

@@ -1,11 +1,7 @@
-package org.example;
-
-import javafx.scene.control.ComboBox;
+package nagyhazi;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Interface {
 
@@ -82,7 +78,38 @@ public class Interface {
 
         decryptButton.addActionListener(e -> {
             Decrypt decrypt = new Decrypt();
-            decrypt.hex(inputField.getText());
+            switch (comboBox.getSelectedItem().toString()) {
+                case "Hex":
+                    outputField.setText(decrypt.hex(inputField.getText()));
+                    break;
+                case "Binary":
+                    outputField.setText(decrypt.binary(inputField.getText()));
+                    break;
+                case "Base64":
+                    outputField.setText(decrypt.base64(inputField.getText()));
+                    break;
+                case "Rot13":
+                    outputField.setText(decrypt.rot13(inputField.getText()));
+                    break;
+                case "Caesar":
+                    outputField.setText(decrypt.caesar(inputField.getText()));
+                    break;
+                case "Vigenere":
+                    outputField.setText(decrypt.vigenere(inputField.getText()));
+                    break;
+                case "Morse":
+                    outputField.setText(decrypt.morse(inputField.getText()));
+                    break;
+                case "Atbash":
+                    outputField.setText(decrypt.atbash(inputField.getText()));
+                    break;
+                case "Bacon":
+                    outputField.setText(decrypt.bacon(inputField.getText()));
+                    break;
+                case "XOR":
+                    outputField.setText(decrypt.xor(inputField.getText()));
+                    break;
+            }
         });
     }
 }

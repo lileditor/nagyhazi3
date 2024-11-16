@@ -1,4 +1,4 @@
-package org.example;
+package nagyhazi;
 
 public class PartnerHandler {
 

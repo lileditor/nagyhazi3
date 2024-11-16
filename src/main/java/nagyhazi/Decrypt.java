@@ -1,4 +1,4 @@
-package org.example;
+package nagyhazi;
 
 import java.util.HexFormat;
 

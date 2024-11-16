@@ -1,4 +1,4 @@
-package org.example;
+package nagyhazi;
 
 public class Encrypt {
     public String base64(String input) {
@@ -48,7 +48,12 @@ public class Encrypt {
     }
 
     public String hex(String input) {
-        return input;
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            output += String.format("%2s", Integer.toHexString(character)).replace(' ', '0');
+        }
+        return output;
     }
 
     public String binary(String input) {
