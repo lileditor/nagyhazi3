@@ -30,10 +30,16 @@ public class Interface {
         inputField.setColumns(10);
         panel.add(inputField);
 
+        JTextField keyField = new JTextField();
+        keyField.setColumns(10);
+        panel.add(keyField);
+
         JTextField outputField = new JTextField();
         outputField.setColumns(10);
         outputField.setEditable(false);
         panel.add(outputField);
+
+
 
 
         String[] items = {"Hex", "Binary", "Base64", "Rot13", "Caesar", "Vigenere", "Morse", "Atbash", "Bacon", "XOR"};
@@ -56,7 +62,7 @@ public class Interface {
                     outputField.setText(encrypt.rot13(inputField.getText()));
                     break;
                 case "Caesar":
-                    outputField.setText(encrypt.caesar(inputField.getText()));
+                    outputField.setText(encrypt.caesar(inputField.getText(), Integer.parseInt(keyField.getText())));
                     break;
                 case "Vigenere":
                     outputField.setText(encrypt.vigenere(inputField.getText()));
@@ -71,7 +77,7 @@ public class Interface {
                     outputField.setText(encrypt.bacon(inputField.getText()));
                     break;
                 case "XOR":
-                    outputField.setText(encrypt.xor(inputField.getText()));
+                    outputField.setText(encrypt.xor(inputField.getText() , keyField.getText()));
                     break;
             }
         });
@@ -92,7 +98,7 @@ public class Interface {
                     outputField.setText(decrypt.rot13(inputField.getText()));
                     break;
                 case "Caesar":
-                    outputField.setText(decrypt.caesar(inputField.getText()));
+                    outputField.setText(decrypt.caesar(inputField.getText(), Integer.parseInt(keyField.getText())));
                     break;
                 case "Vigenere":
                     outputField.setText(decrypt.vigenere(inputField.getText()));
@@ -107,7 +113,7 @@ public class Interface {
                     outputField.setText(decrypt.bacon(inputField.getText()));
                     break;
                 case "XOR":
-                    outputField.setText(decrypt.xor(inputField.getText()));
+                    outputField.setText(decrypt.xor(inputField.getText(), keyField.getText()));
                     break;
             }
         });

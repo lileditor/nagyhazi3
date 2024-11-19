@@ -34,12 +34,25 @@ public class Decrypt {
         return output;
     }
 
-    public String xor(String input) {
-        return input;
+    public String xor(String input, String key) {
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            output += (char) (input.charAt(i) ^ key.charAt(i % key.length()));
+        }
+        return output;
     }
 
-    public String caesar(String input) {
-        return input;
+    public String caesar(String input, int key) {
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            if (character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z') {
+                output += (char) (character - key);
+            } else {
+                output += (char) (character - key + 26);
+            }
+        }
+        return output;
     }
 
     public String vigenere(String input) {
