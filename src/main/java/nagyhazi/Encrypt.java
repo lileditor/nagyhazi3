@@ -53,7 +53,7 @@ public class Encrypt {
         return output;
     }
 
-
+    // key -> shift with the same of the key char
     public String vigenere(String input) {
         return input;
     }
@@ -81,12 +81,12 @@ public class Encrypt {
         return output;
     }
 
-
+    //reverse alphabet
     public String atbash(String input) {
         return input;
     }
 
-
+    // distance form a => 0 = a 1 = b
     public String bacon(String input) {
         return input;
     }
