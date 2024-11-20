@@ -46,7 +46,7 @@ public class Decrypt {
         String output = "";
         for (int i = 0; i < input.length(); i++) {
             char character = input.charAt(i);
-            if (character >= 'a' && character <= 'z') {
+            if (character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z') {
                 output += (char) (character - key);
             } else {
                 output += (char) (character - key + 26);
@@ -55,12 +55,31 @@ public class Decrypt {
         return output;
     }
 
-    public String vigenere(String input) {
-        return input;
+    public String vigenere(String input, String key) {
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            char keyChar = key.charAt(i % key.length());
+            if (character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z') {
+                output += (char) (character - keyChar + 'a');
+            } else {
+                output += (char) (character - keyChar + 'A');
+            }
+        }
+        return output;
     }
 
     public String morse(String input) {
-        return input;
+        String output = "";
+        String[] morse = input.split(" ");
+        for (String morseCode : morse) {
+            for (morseCodes morseCode1 : morseCodes.values()) {
+                if (morseCode.equals(morseCode1.toString())) {
+                    output += morseCode1.name();
+                }
+            }
+        }
+        return output;
     }
 
     public String hex(String input) {
@@ -81,10 +100,29 @@ public class Decrypt {
     }
 
     public String atbash(String input) {
-        return input;
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            int decimal = (int) character - 'a';
+            output += (char) ('z' - decimal);
+        }
+        return output;
     }
 
     public String bacon(String input) {
-        return input;
+        String output = "";
+        for (int i = 0; i < input.length(); i += 5) {
+            String binary = "";
+            String chunk = input.substring(i, i + 5);
+            for (int j = 0; j < chunk.length(); j++) {
+                if (chunk.charAt(j) == 'a') {
+                    binary += "0";
+                } else {
+                    binary += "1";
+                }
+            }
+            output += (char) Integer.parseInt(binary, 2) + 'a';
+        }
+        return output;
     }
 }

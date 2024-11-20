@@ -1,17 +1,14 @@
 package nagyhazi;
 
-import java.util.HexFormat;
-
-public class Decrypt {
-
+public class Encrypt {
     public String base64(String input) {
         String binary = "";
         String output = "";
         for (int i = 0; i < input.length(); i++) {
-            binary += String.format("%6s", Integer.toBinaryString(input.charAt(i))).replace(' ', '0');
+            binary += String.format("%8s", Integer.toBinaryString(input.charAt(i))).replace(' ', '0');
         }
-        for (int i = 0; i < binary.length(); i += 8) {
-            String chunk = binary.substring(i, i + 8);
+        for (int i = 0; i < binary.length(); i += 6) {
+            String chunk = binary.substring(i, i + 6);
             int decimal = Integer.parseInt(chunk, 2);
             char character = (char) decimal;
             output += character;
@@ -42,86 +39,79 @@ public class Decrypt {
         return output;
     }
 
-    public String caesar(String input, int key) {
+    public String caesar(String input , int key) {
         String output = "";
         for (int i = 0; i < input.length(); i++) {
             char character = input.charAt(i);
             if (character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z') {
-                output += (char) (character - key);
+                output += (char) (character + key);
             } else {
-                output += (char) (character - key + 26);
+                output += (char) (character + key - 26);
             }
+
         }
         return output;
     }
 
+    // key -> shift with the same of the key char
     public String vigenere(String input, String key) {
-        String output = "";
-        for (int i = 0; i < input.length(); i++) {
-            char character = input.charAt(i);
-            char keyChar = key.charAt(i % key.length());
-            if (character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z') {
-                output += (char) (character - keyChar + 'a');
-            } else {
-                output += (char) (character - keyChar + 'A');
-            }
-        }
-        return output;
+        return input;
     }
 
+    // charset
     public String morse(String input) {
         String output = "";
-        String[] morse = input.split(" ");
-        for (String morseCode : morse) {
-            for (morseCodes morseCode1 : morseCodes.values()) {
-                if (morseCode.equals(morseCode1.toString())) {
-                    output += morseCode1.name();
-                }
-            }
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            output += morseCodes.valueOf(String.valueOf(character)).toString();
+            output += " ";
         }
         return output;
     }
 
     public String hex(String input) {
         String output = "";
-        for (int i = 0; i < input.length(); i += 2) {
-            output += String.valueOf((char) HexFormat.fromHexDigit(Integer.parseInt(input.substring(i, i + 2), 16)));
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            output += String.format("%2s", Integer.toHexString(character)).replace(' ', '0');
         }
         return output;
     }
 
     public String binary(String input) {
         String output = "";
-        for (int i = 0; i < input.length(); i += 8) {
-            output += String.valueOf(Byte.parseByte(input.substring(i, i + 8)));
-
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            output += String.format("%8s", Integer.toBinaryString(character)).replace(' ', '0');
         }
         return output;
     }
 
+    //reverse alphabet
     public String atbash(String input) {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             char character = input.charAt(i);
             int decimal = (int) character - 'a';
-            output += (char) ('z' - decimal);
+            output.append((char) ('z' - decimal));
         }
-        return output;
+        return output.toString();
     }
 
+    // distance form a => 0 = a 1 = b
     public String bacon(String input) {
+        String binary = "";
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            binary += String.format("%5s", Integer.toBinaryString(character)).replace(' ', '0');
+        }
         String output = "";
-        for (int i = 0; i < input.length(); i += 5) {
-            String binary = "";
-            String chunk = input.substring(i, i + 5);
-            for (int j = 0; j < chunk.length(); j++) {
-                if (chunk.charAt(j) == 'a') {
-                    binary += "0";
-                } else {
-                    binary += "1";
-                }
+        for (int i = 0; i < binary.length(); i ++) {
+            if (binary.charAt(i) == '0') {
+                output += "a";
+            } else {
+                output += "b";
             }
-            output += (char) Integer.parseInt(binary, 2) + 'a';
         }
         return output;
     }

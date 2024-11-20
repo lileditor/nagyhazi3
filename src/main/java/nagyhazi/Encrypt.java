@@ -54,13 +54,29 @@ public class Encrypt {
     }
 
     // key -> shift with the same of the key char
-    public String vigenere(String input) {
-        return input;
+    public String vigenere(String input, String key) {
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            char keyChar = key.charAt(i % key.length());
+            if (character >= 'a' && character <= 'z' || character >= 'A' && character <= 'Z') {
+                output += (char) (character + keyChar - 'a');
+            } else {
+                output += (char) (character + keyChar - 'A');
+            }
+        }
+        return output;
     }
 
     // charset
     public String morse(String input) {
-        return input;
+        String output = "";
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            output += morseCodes.valueOf(String.valueOf(character)).toString();
+            output += " ";
+        }
+        return output;
     }
 
     public String hex(String input) {
@@ -83,11 +99,30 @@ public class Encrypt {
 
     //reverse alphabet
     public String atbash(String input) {
-        return input;
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            int decimal = (int) character - 'a';
+            output.append((char) ('z' - decimal));
+        }
+        return output.toString();
     }
 
     // distance form a => 0 = a 1 = b
     public String bacon(String input) {
-        return input;
+        String binary = "";
+        for (int i = 0; i < input.length(); i++) {
+            char character = input.charAt(i);
+            binary += String.format("%5s", Integer.toBinaryString(character)).replace(' ', '0');
+        }
+        String output = "";
+        for (int i = 0; i < binary.length(); i ++) {
+            if (binary.charAt(i) == '0') {
+                output += "a";
+            } else {
+                output += "b";
+            }
+        }
+        return output;
     }
 }

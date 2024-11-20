@@ -101,7 +101,7 @@ public class Interface {
                     outputField.setText(decrypt.caesar(inputField.getText(), Integer.parseInt(keyField.getText())));
                     break;
                 case "Vigenere":
-                    outputField.setText(decrypt.vigenere(inputField.getText(), keyField.getText()));
+                    outputField.setText(decrypt.vigenere(inputField.getText()));
                     break;
                 case "Morse":
                     outputField.setText(decrypt.morse(inputField.getText()));
