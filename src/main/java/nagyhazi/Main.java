@@ -2,9 +2,9 @@ package nagyhazi;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Interface interface1 = new Interface();
+        EncryptionUi encryptionUi1 = new EncryptionUi();
 
-        interface1.start();
+        encryptionUi1.start();
 
     }
 }
