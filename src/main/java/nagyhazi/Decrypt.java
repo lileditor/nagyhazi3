@@ -85,7 +85,7 @@ public class Decrypt {
     public String hex(String input) {
         String output = "";
         for (int i = 0; i < input.length(); i += 2) {
-            output += String.valueOf((char) HexFormat.fromHexDigit(Integer.parseInt(input.substring(i, i + 2), 16)));
+            output += String.valueOf((char) HexFormat.fromHexDigit(Integer.parseInt(input.substring(i, i + 1), 16)));
         }
         return output;
     }

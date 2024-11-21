@@ -16,7 +16,7 @@ public class Decrypt {
             char character = (char) decimal;
             output += character;
         }
-        return input;
+        return output;
     }
 
     public String rot13(String input) {
