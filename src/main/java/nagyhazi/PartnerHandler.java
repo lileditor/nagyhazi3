@@ -10,6 +10,26 @@ public class PartnerHandler {
 
     protected HashMap<String, String[]> partners;
 
+    protected HashMap<String, String[]> toMap(JSONObject json) {
+        Map<String, String[]> map = new HashMap<String, Object>();
+
+        Iterator<String> keysItr = json.keys();
+        while(keysItr.hasNext()) {
+            String key = keysItr.next();
+            String[] value = json.get(key);
+            
+            if(value instanceof JSONArray) {
+                value = toList((JSONArray) value);
+            }
+            
+            else if(value instanceof JSONObject) {
+                value = toMap((JSONObject) value);
+            }
+            map.put(key, value);
+        }
+        return map;
+    }
+
     @SuppressWarnings("unchecked")
     public void addPartner(String partner, String encryptionType, String keys) throws IOException, ParseException {
         JSONObject savedPartners = new FileHandler().loadFromFile("partner.json");
