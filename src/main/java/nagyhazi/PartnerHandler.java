@@ -8,14 +8,14 @@ import java.util.HashMap;
 
 public class PartnerHandler {
 
-    protected HashMap<String, String> partners;
+    protected HashMap<String, String[2]> partners;
 
     public void addPartner(String partner, String encryptionType, String keys) throws IOException, ParseException {
         JSONObject partnerJson = new JSONObject();
         JSONObject savedPartners = new FileHandler().loadFromFile("partner.json");
 
         for (Object key : savedPartners.keySet()) {
-            partnerJson.put(key.toString(), savedPartners.get(key.toString()));
+            partnerJson.put(key.toString(), [savedPartners.get(key.toString()), ]);
         }
 
         partners.put(partner, encryptionType);
@@ -32,9 +32,9 @@ public class PartnerHandler {
         }
     }
 
-    public void updatePartner(String partner, String encryptionType) {
+    public void updatePartner(String partner, String encryptionType, String key) {
         partners.remove(partner);
-        partners.put(partner, encryptionType);
+        partners.put(partner, [encryptionType, key]);
         try {
             new FileHandler().saveToFile((JSONObject) partners, "partner.json");
         } catch (IOException e) {
@@ -47,7 +47,7 @@ public class PartnerHandler {
             String[] users = new String[10];
             JSONObject jsonObject = new FileHandler().loadFromFile("partner.json");
             for (int i = 0; i < jsonObject.keySet().toArray().length; i++) {
-                users[i] = jsonObject.keySet().toArray()[i].toString();
+                users[i] = jsonObject.get("name");
             }
             return users;
         } catch (IOException | ParseException e) {

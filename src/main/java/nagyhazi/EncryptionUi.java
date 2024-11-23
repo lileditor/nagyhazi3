@@ -42,16 +42,16 @@ public class EncryptionUi {
 
     protected void decryptButtonListener(ActionEvent e) {
         switch (dropdown.getSelectedItem().toString()) {
-            case "Hex" -> decryptions.hex(inputField.getText());
-            case "Binary" -> decryptions.binary(inputField.getText());
-            case "Base64" -> decryptions.base64(inputField.getText());
-            case "Rot13" -> decryptions.rot13(inputField.getText());
-            case "Caesar" -> decryptions.caesar(inputField.getText(), Integer.parseInt(keyField.getText()));
-            case "Vigenere" -> decryptions.vigenere(inputField.getText(), keyField.getText());
-            case "Morse" -> decryptions.morse(inputField.getText());
-            case "Atbash" -> decryptions.atbash(inputField.getText());
-            case "Bacon" -> decryptions.bacon(inputField.getText());
-            case "XOR" -> decryptions.xor(inputField.getText(), keyField.getText());
+            case "Hex" -> decryptField.setText(decryptions.hex(outputField.getText()));
+            case "Binary" -> decryptField.setText(decryptions.binary(outputField.getText()));
+            case "Base64" -> decryptField.setText(decryptions.base64(outputField.getText()));
+            case "Rot13" -> decryptField.setText(decryptions.rot13(outputField.getText()));
+            case "Caesar" -> decryptField.setText(decryptions.caesar(outputField.getText(), Integer.parseInt(keyField.getText())));
+            case "Vigenere" -> decryptField.setText(decryptions.vigenere(outputField.getText(), keyField.getText()));
+            case "Morse" -> decryptField.setText(decryptions.morse(outputField.getText()));
+            case "Atbash" -> decryptField.setText(decryptions.atbash(outputField.getText()));
+            case "Bacon" -> decryptField.setText(decryptions.bacon(outputField.getText()));
+            case "XOR" -> decryptField.setText(decryptions.xor(outputField.getText(), keyField.getText()));
             default -> {
                 break;
             }
@@ -125,7 +125,8 @@ public class EncryptionUi {
 
         gbc.gridx = 2; gbc.gridy = 1;
         ioPanel.add(new JLabel("Decrypt"), gbc);
-
+        gbc.gridx = 3; gbc.gridy = 1;
+        ioPanel.add(decryptField, gbc);
 
         // Add Key label and field
         gbc.gridx = 0; gbc.gridy = 1;
