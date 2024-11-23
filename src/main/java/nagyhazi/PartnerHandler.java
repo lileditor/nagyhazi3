@@ -10,12 +10,12 @@ public class PartnerHandler {
 
     protected HashMap<String, String> partners;
 
-    public void addPartner(String partner, String encryptionType) throws IOException, ParseException {
+    public void addPartner(String partner, String encryptionType, String keys) throws IOException, ParseException {
         JSONObject partnerJson = new JSONObject();
         JSONObject savedPartners = new FileHandler().loadFromFile("partner.json");
 
         for (Object key : savedPartners.keySet()) {
-            partners.put(key.toString(), savedPartners.get(key).toString());
+            partnerJson.put(key.toString(), savedPartners.get(key.toString()));
         }
 
         partners.put(partner, encryptionType);

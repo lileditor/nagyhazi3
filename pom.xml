@@ -15,6 +15,7 @@
         <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
+        <exec.mainClass>nagyhazi.Main</exec.mainClass>
     </properties>
 
     <dependencies>

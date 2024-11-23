@@ -18,6 +18,9 @@ public class EncryptionUi {
     JTextField inputField = new JTextField(15);
     JTextField keyField = new JTextField(15);
     JTextField outputField = new JTextField(15);
+    JTextField nameField = new JTextField(15);
+    JTextField keyField2 = new JTextField(15);
+    JTextField decryptField = new JTextField(15);
 
     protected void encryptButtonListener(ActionEvent e) {
         switch (dropdown.getSelectedItem().toString()) {
@@ -120,6 +123,10 @@ public class EncryptionUi {
         gbc.gridx = 3; gbc.gridy = 0;
         ioPanel.add(outputField, gbc);
 
+        gbc.gridx = 2; gbc.gridy = 1;
+        ioPanel.add(new JLabel("Decrypt"), gbc);
+
+
         // Add Key label and field
         gbc.gridx = 0; gbc.gridy = 1;
         gbc.gridwidth = 1;
@@ -132,6 +139,17 @@ public class EncryptionUi {
         ioPanel.add(new JLabel(""), gbc);
 
         frame.add(ioPanel, BorderLayout.CENTER);
+    }
+
+    protected void addButtonListener(ActionEvent e)  {
+        String name = JOptionPane.showInputDialog("Enter a name for the new user:");
+        if (name != null) {
+            try {
+                new PartnerHandler().addPartner(nameField.getText(), dropdown.getSelectedItem().toString(), keyField2.getText());
+            } catch (IOException | ParseException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 
     protected void addPartners(JFrame frame) {
@@ -155,13 +173,15 @@ public class EncryptionUi {
         gbc.gridx = 0; gbc.gridy = 0;
         formPanel.add(new JLabel("Add New User:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0;
-        formPanel.add(new JButton("Add"), gbc);
+        JButton addButton = new JButton("Add");
+        addButton.addActionListener(this::addButtonListener);
+        formPanel.add(addButton, gbc);
 
         // Add 'Name' field
         gbc.gridx = 0; gbc.gridy = 1;
         formPanel.add(new JLabel("Name:"), gbc);
         gbc.gridx = 1; gbc.gridy = 1;
-        formPanel.add(new JTextField(15), gbc);
+        formPanel.add(nameField, gbc);
 
         // Add 'Encryption Type' dropdown
         gbc.gridx = 0; gbc.gridy = 2;
@@ -169,6 +189,11 @@ public class EncryptionUi {
         gbc.gridx = 1; gbc.gridy = 2;
         JComboBox<String> encryptionDropdown = new JComboBox<>(items);
         formPanel.add(encryptionDropdown, gbc);
+
+        gbc.gridx = 0; gbc.gridy = 3;
+        formPanel.add(new JLabel("Key:"), gbc);
+        gbc.gridx = 1; gbc.gridy = 3;
+        formPanel.add(keyField2, gbc);
 
         bottomPanel.add(formPanel, BorderLayout.CENTER);
 

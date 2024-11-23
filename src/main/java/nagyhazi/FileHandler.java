@@ -21,9 +21,19 @@ public class FileHandler {
         fileWriter.close();
     }
 
+    @SuppressWarnings("unused")
     public JSONObject loadFromFile(String fileName) throws IOException, ParseException {
-        FileReader fileReader = new FileReader("./src/main/resources/output.json");
-        return (JSONObject) new JSONParser().parse(fileReader);
+        FileReader fileReader = new FileReader("./src/main/resources/" + fileName);
+        if (fileReader == null) {
+            return new JSONObject();
+        }
+        JSONObject jsonObject = (JSONObject) new JSONParser().parse(fileReader);
+        fileReader.close();
+        if (jsonObject.isEmpty()) {
+            return new JSONObject();
+        } else {
+            return jsonObject;
+        }
     }
 
 }
