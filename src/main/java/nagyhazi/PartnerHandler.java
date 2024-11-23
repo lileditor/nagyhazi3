@@ -8,17 +8,19 @@ import java.util.HashMap;
 
 public class PartnerHandler {
 
-    protected HashMap<String, String[2]> partners;
+    protected HashMap<String, String[]> partners;
 
+    @SuppressWarnings("unchecked")
     public void addPartner(String partner, String encryptionType, String keys) throws IOException, ParseException {
-        JSONObject partnerJson = new JSONObject();
         JSONObject savedPartners = new FileHandler().loadFromFile("partner.json");
 
-        for (Object key : savedPartners.keySet()) {
-            partnerJson.put(key.toString(), [savedPartners.get(key.toString()), ]);
+        if (savedPartners.isEmpty()) {
+            partners = new HashMap<>();
+        } else {
+            partners = toMap(savedPartners);
         }
 
-        partners.put(partner, encryptionType);
+        partners.put(partner, new String[]{encryptionType, keys});
 
         new FileHandler().saveToFile((JSONObject) partners, "partner.json");
     }
@@ -47,7 +49,7 @@ public class PartnerHandler {
             String[] users = new String[10];
             JSONObject jsonObject = new FileHandler().loadFromFile("partner.json");
             for (int i = 0; i < jsonObject.keySet().toArray().length; i++) {
-                users[i] = jsonObject.get("name");
+                users[i] = (String) jsonObject.get("name");
             }
             return users;
         } catch (IOException | ParseException e) {
