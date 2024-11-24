@@ -1,1 +1,1 @@
-{}
+{"123":{"name":"123","encryptionType":"XOR","key":"123"},"test":{"name":"test","encryptionType":"Rot13","key":""},"tst":{"name":"tst","encryptionType":"Atbash","key":""}}

@@ -6,12 +6,15 @@ import org.json.simple.parser.ParseException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 public class EncryptionUi {
     protected String[] items = {"Hex", "Binary", "Base64", "Rot13", "Caesar", "Vigenere", "Morse", "Atbash", "Bacon", "XOR"};
 
     JComboBox<String> dropdown;
+    JComboBox<String> encryptionDropdown = new JComboBox<>(items);
     Encryptions encryptions = new Encryptions();
     Decryptions decryptions = new Decryptions();
 
@@ -21,6 +24,9 @@ public class EncryptionUi {
     JTextField nameField = new JTextField(15);
     JTextField keyField2 = new JTextField(15);
     JTextField decryptField = new JTextField(15);
+
+    JList<String> list = new JList<>(new PartnerHandler().getUsers());
+    JScrollPane scrollPane = new JScrollPane(list);
 
     protected void encryptButtonListener(ActionEvent e) {
         switch (dropdown.getSelectedItem().toString()) {
@@ -144,7 +150,8 @@ public class EncryptionUi {
 
     protected void addButtonListener(ActionEvent e)  {
             try {
-                new PartnerHandler().addPartner(nameField.getText(), dropdown.getSelectedItem().toString(), keyField2.getText());
+                new PartnerHandler().addPartner(nameField.getText(), encryptionDropdown.getSelectedItem().toString(), keyField2.getText());
+                list.setListData(new PartnerHandler().getUsers());
             } catch (IOException | ParseException ex) {
                 ex.printStackTrace();
             }
@@ -157,8 +164,14 @@ public class EncryptionUi {
         bottomPanel.setBorder(BorderFactory.createTitledBorder("User Management"));
 
         // Left: JList
-        JList<String> list = new JList<>(new PartnerHandler().getUsers());
-        JScrollPane scrollPane = new JScrollPane(list);
+        list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(list.getSelectedValue());
+                keyField.setText(new PartnerHandler().getKey((String)list.getSelectedValue()));
+                dropdown.setSelectedItem(new PartnerHandler().getEncryptionType((String)list.getSelectedValue()));
+            }
+        });
         scrollPane.setPreferredSize(new Dimension(150, 100));
         bottomPanel.add(scrollPane, BorderLayout.WEST);
 
@@ -186,7 +199,6 @@ public class EncryptionUi {
         gbc.gridx = 0; gbc.gridy = 2;
         formPanel.add(new JLabel("Encryption Type:"), gbc);
         gbc.gridx = 1; gbc.gridy = 2;
-        JComboBox<String> encryptionDropdown = new JComboBox<>(items);
         formPanel.add(encryptionDropdown, gbc);
 
         gbc.gridx = 0; gbc.gridy = 3;
@@ -202,7 +214,7 @@ public class EncryptionUi {
 
     public void start() {
         // Create the frame
-        JFrame frame = new JFrame("Swing UI Example");
+        JFrame frame = new JFrame("Encryptions");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(600, 400);
         frame.setLayout(new BorderLayout());
