@@ -5,27 +5,20 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class PartnerHandler {
 
     protected HashMap<String, String[]> partners;
 
+    @SuppressWarnings("unchecked")
     protected HashMap<String, String[]> toMap(JSONObject json) {
-        Map<String, String[]> map = new HashMap<String, Object>();
+        HashMap<String, String[]> map = new HashMap<String, String[]>();
 
-        Iterator<String> keysItr = json.keys();
-        while(keysItr.hasNext()) {
-            String key = keysItr.next();
-            String[] value = json.get(key);
-            
-            if(value instanceof JSONArray) {
-                value = toList((JSONArray) value);
-            }
-            
-            else if(value instanceof JSONObject) {
-                value = toMap((JSONObject) value);
-            }
-            map.put(key, value);
+        Iterator<Object> keys = json.keySet().iterator();
+        while (keys.hasNext()) {
+            JSONObject key = (JSONObject) keys.next();
+            map.put(key.get("name").toString(), new String[] {key.get("encryptionType").toString(), key.get("key").toString()});
         }
         return map;
     }

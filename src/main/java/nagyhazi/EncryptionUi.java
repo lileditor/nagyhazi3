@@ -143,15 +143,13 @@ public class EncryptionUi {
     }
 
     protected void addButtonListener(ActionEvent e)  {
-        String name = JOptionPane.showInputDialog("Enter a name for the new user:");
-        if (name != null) {
             try {
                 new PartnerHandler().addPartner(nameField.getText(), dropdown.getSelectedItem().toString(), keyField2.getText());
             } catch (IOException | ParseException ex) {
                 ex.printStackTrace();
             }
         }
-    }
+    
 
     protected void addPartners(JFrame frame) {
         // Third section: JList and fields
