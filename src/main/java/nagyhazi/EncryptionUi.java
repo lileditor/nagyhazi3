@@ -13,6 +13,8 @@ import java.io.IOException;
 public class EncryptionUi {
     protected String[] items = {"Hex", "Binary", "Base64", "Rot13", "Caesar", "Vigenere", "Morse", "Atbash", "Bacon", "XOR"};
 
+    PartnerHandler partnerHandler = new PartnerHandler();
+
     JComboBox<String> dropdown;
     JComboBox<String> encryptionDropdown = new JComboBox<>(items);
     Encryptions encryptions = new Encryptions();
@@ -25,7 +27,7 @@ public class EncryptionUi {
     JTextField keyField2 = new JTextField(15);
     JTextField decryptField = new JTextField(15);
 
-    JList<String> list = new JList<>(new PartnerHandler().getUsers());
+    JList<String> list = new JList<>(partnerHandler.getUsers());
     JScrollPane scrollPane = new JScrollPane(list);
 
     protected void encryptButtonListener(ActionEvent e) {
@@ -150,8 +152,8 @@ public class EncryptionUi {
 
     protected void addButtonListener(ActionEvent e)  {
             try {
-                new PartnerHandler().addPartner(nameField.getText(), encryptionDropdown.getSelectedItem().toString(), keyField2.getText());
-                list.setListData(new PartnerHandler().getUsers());
+                partnerHandler.addPartner(nameField.getText(), encryptionDropdown.getSelectedItem().toString(), keyField2.getText());
+                list.setListData(partnerHandler.getUsers());
             } catch (IOException | ParseException ex) {
                 ex.printStackTrace();
             }
@@ -168,8 +170,8 @@ public class EncryptionUi {
             @Override
             public void mouseClicked(MouseEvent e) {
                 System.out.println(list.getSelectedValue());
-                keyField.setText(new PartnerHandler().getKey((String)list.getSelectedValue()));
-                dropdown.setSelectedItem(new PartnerHandler().getEncryptionType((String)list.getSelectedValue()));
+                keyField.setText(partnerHandler.getKey((String)list.getSelectedValue()));
+                dropdown.setSelectedItem(partnerHandler.getEncryptionType((String)list.getSelectedValue()));
             }
         });
         scrollPane.setPreferredSize(new Dimension(150, 100));
